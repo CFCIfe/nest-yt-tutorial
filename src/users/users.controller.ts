@@ -7,45 +7,51 @@ import {
   Get,
   Param,
   Query,
-  ParseIntPipe
+  ParseIntPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
+  constructor(private readonly usersService: UsersService) {}
 
-  constructor(private readonly usersService: UsersService){}
-  
   @Get()
   findAll(@Query('role') role?: 'INTERN' | 'ENGINEER' | 'ADMIN') {
-    return this.usersService.findAll(role)
+    return this.usersService.findAll(role);
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: string) {
+  findOne(@Param('id', ParseIntPipe) id: number) {
     return this.usersService.findOne(id);
   }
 
   @Post()
-  create(@Body() user: {
-    name: string;
-    email: string;
-    role: 'INTERN' | 'ENGINEER' | 'ADMIN';
-  }) {
+  create(
+    @Body()
+    user: {
+      name: string;
+      email: string;
+      role: 'INTERN' | 'ENGINEER' | 'ADMIN';
+    },
+  ) {
     return this.usersService.create(user);
   }
 
   @Patch(':id')
-  update(@Param('id', ParseIntPipe) id: string, @Body() userUpdate: {
-    name?: string;
-    email?: string;
-    role?: 'INTERN' | 'ENGINEER' | 'ADMIN';
-  }) {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body()
+    userUpdate: {
+      name?: string;
+      email?: string;
+      role?: 'INTERN' | 'ENGINEER' | 'ADMIN';
+    },
+  ) {
     return this.usersService.update(id, userUpdate);
   }
 
   @Delete(':id')
-  delete(@Param('id', ParseIntPipe) id: string) {
+  delete(@Param('id', ParseIntPipe) id: number) {
     return this.usersService.delete(id);
   }
 }
