@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+} from '@nestjs/common';
 import { EmployeesService } from './employees.service';
 import { Prisma } from '@prisma/client';
 
@@ -18,11 +27,15 @@ export class EmployeesController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
+    console.log(typeof id);
     return this.employeesService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateEmployeeDto: Prisma.EmployeeUpdateInput) {
+  update(
+    @Param('id') id: string,
+    @Body() updateEmployeeDto: Prisma.EmployeeUpdateInput,
+  ) {
     return this.employeesService.update(+id, updateEmployeeDto);
   }
 

@@ -4,11 +4,11 @@ import { DatabaseService } from 'src/database/database.service';
 
 @Injectable()
 export class EmployeesService {
-  constructor(private readonly databaseService: DatabaseService) { }
+  constructor(private readonly databaseService: DatabaseService) {}
 
   async create(createEmployeeDto: Prisma.EmployeeCreateInput) {
     return this.databaseService.employee.create({
-      data: createEmployeeDto
+      data: createEmployeeDto,
     });
   }
 
@@ -17,8 +17,8 @@ export class EmployeesService {
       return this.databaseService.employee.findMany({
         where: {
           role,
-        }
-      })
+        },
+      });
     }
 
     return this.databaseService.employee.findMany();
@@ -28,16 +28,16 @@ export class EmployeesService {
     return this.databaseService.employee.findUnique({
       where: {
         id,
-      }
+      },
     });
   }
 
   async update(id: number, updateEmployeeDto: Prisma.EmployeeUpdateInput) {
     return this.databaseService.employee.update({
-      where:{
+      where: {
         id,
       },
-      data: updateEmployeeDto
+      data: updateEmployeeDto,
     });
   }
 
@@ -45,7 +45,7 @@ export class EmployeesService {
     return this.databaseService.employee.delete({
       where: {
         id,
-      }
-    });;
+      },
+    });
   }
 }
