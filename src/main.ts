@@ -2,6 +2,7 @@ import { HttpAdapterHost, NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
 // import { MyLoggerService } from './my-logger/my-logger.service';
 import { AllExceptionsFilter } from "./all-exceptions.filter";
+import { SwaggerModule, DocumentBuilder } from "@nestjs/swagger";
 
 async function bootstrap() {
   const app = await NestFactory.create(
@@ -14,6 +15,12 @@ async function bootstrap() {
   app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
   app.enableCors();
   app.setGlobalPrefix("api");
+
+  const config = new DocumentBuilder().setTitle("Employee Application").setDescription("Employee API Documentation").setVersion("1.0").addTag("Employees").build();
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup("api", app, document);
+
   await app.listen(3000);
 }
 bootstrap();
