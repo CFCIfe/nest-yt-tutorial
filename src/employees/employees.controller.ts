@@ -31,7 +31,6 @@ export class EmployeesController {
   @Throttle({ short: { ttl: 1000, limit: 2 } })
   @Get(':id')
   findOne(@Param('id') id: string) {
-    console.log(typeof id);
     return this.employeesService.findOne(+id);
   }
 
